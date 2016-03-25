@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PackDescription>
+ <Manifest>
+  <UniqueID></UniqueID>
+  <Name></Name>
+  <Type></Type>
+  <PackVersion>1</PackVersion>
+  <Target></Target>
+  <TargetVersion></TargetVersion>
+  <TargetMinorVersion></TargetMinorVersion>
+  <SubType></SubType>
+  <IconWidth>-1</IconWidth>
+  <IconHeight>-1</IconHeight>
+  <Required>false</Required>
+ </Manifest>
+ <Folder>
+  <Path>DataPreflight</Path>
+  <Wildcard>
+   <Path>src</Path>
+   <Wildcard>*</Wildcard>
+   <Recursive>1</Recursive>
+  </Wildcard>
+ </Folder>
+</PackDescription>
