@@ -4,3 +4,8 @@ This script allows you to route jobs in a Switch flow without a direct connector
 This repo contains two scripts: an incoming and an outgoing portal. You simply set up a common non-automanaged folder (called Ether) which all of your portals use. You don't have to set up an Ether for every flow, it is global. Portals are multiplexed by channels (which you select in the script) so you can have multiple sets of portals within a single flow. 
 
 <img src="https://i.imgur.com/4eFxxom.png">
+
+## Todo
+- Pack and unpack jobs automatically to maintain the Switch job ticket between flows
+- Create an option to use portals between flows
+- Allow multiple outgoing portals for a given channel
