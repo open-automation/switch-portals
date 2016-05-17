@@ -7,6 +7,8 @@ This repo contains two scripts: an incoming and an outgoing portal. You simply s
 
 ## Usage
 
+Route jobs through incoming portals. If they share the same scope:channel combination, they will process out of like outgoing portals. Use these to better organize individual flows or allow multiple flows to work together, without having to manage a bunch of non-automanaged folders. When passing jobs between flows, if metadata is needed, currently you have to pack and unpack before and after the respective portals.
+
 ### Flow element properties
 
 #### Ether Path
