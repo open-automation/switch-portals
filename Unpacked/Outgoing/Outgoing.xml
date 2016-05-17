@@ -26,9 +26,10 @@
         <SwitchModule Type="string" Editor="hide"/>
         <ObsoleteProperties Type="string" Editor="hide"/>
         <ObsoleteConnectionProperties Type="string" Editor="hide"/>
-        <Debug Validation="Standard" LocalizedTagName="Debug" Subtype="inline" Default="No" Tooltip="" DetailedInfo="" Type="bool" Editor="inline">No</Debug>
         <EtherPath Validation="Standard" LocalizedTagName="Ether Path" Subtype="inline" Default="" Tooltip="" DetailedInfo="" Type="string" Editor="inline;choosefolder"></EtherPath>
+        <Scope Validation="Standard" LocalizedTagName="Scope" Subtype="inline" Default="Flow" Tooltip="" DetailedInfo="" Type="enum:Flow;Global" Editor="inline">Flow</Scope>
         <Channel Validation="Standard" LocalizedTagName="Channel" Subtype="" Default="" Tooltip="" DetailedInfo="" Type="enum:A;B;C;D;E;F" Editor="inline"></Channel>
+        <Debug Validation="Standard" LocalizedTagName="Debug" Subtype="inline" Default="No" Tooltip="" DetailedInfo="" Type="bool" Editor="inline">No</Debug>
     </ElementFields>
     <ConnectionFields/>
 </Object>
