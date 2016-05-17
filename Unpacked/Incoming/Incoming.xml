@@ -27,7 +27,9 @@
         <ObsoleteProperties Type="string" Editor="hide"/>
         <ObsoleteConnectionProperties Type="string" Editor="hide"/>
         <EtherPath Validation="Standard" LocalizedTagName="Ether Path" Subtype="inline" Default="" Tooltip="A non-automanaged path for the script to work in." DetailedInfo="" Type="string" Editor="inline;choosefolder"></EtherPath>
-        <Channel Validation="Standard" LocalizedTagName="Channel" Subtype="inline" Default="A" Tooltip="" DetailedInfo="" Type="enum:A;B;C;D;E;F;G" Editor="inline">A</Channel>
+        <Scope Validation="Standard" LocalizedTagName="Scope" Subtype="inline" Default="Flow" Tooltip="" DetailedInfo="" Type="enum:Flow;Global" Editor="inline">Flow</Scope>
+        <Channel Validation="Standard" LocalizedTagName="Channel" Subtype="inline" Default="" Tooltip="" DetailedInfo="" Type="enum:A;B;C;D;E;F;G" Editor="inline;sltextwithvar;scriptexp"></Channel>
+        <Debug Validation="Standard" LocalizedTagName="Debug Warnings" Subtype="inline" Default="No" Tooltip="Send debug messages to the log as warnings." DetailedInfo="" Type="bool" Editor="inline">No</Debug>
     </ElementFields>
     <ConnectionFields/>
 </Object>
