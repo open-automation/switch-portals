@@ -5,6 +5,22 @@ This repo contains two scripts: an incoming and an outgoing portal. You simply s
 
 <img src="https://i.imgur.com/4eFxxom.png">
 
+## Usage
+
+### Flow element properties
+
+#### Ether Path
+A single non-automanaged path for the portals to work in. All of your portals can share the same Ether. 
+
+#### Scope
+This property namespaces your channels, allowing you to restrict or allow portals to work within or between flows.
+
+#### Channel
+This property multiplexes portals to allow several portals within your flow, or in other flows, to work without conflict. Incoming and outgoing portals which share the same channel and scope will exchange jobs.
+
+#### Debug Warnings
+Optional flag to send debug messages to the log as warnings.
+
 ## Todo
 - Pack and unpack jobs automatically to maintain the Switch job ticket between flows
 - Allow multiple outgoing portals for a given channel
