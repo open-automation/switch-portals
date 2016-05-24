@@ -10,7 +10,7 @@
         <OutgoingConnections DetailedInfo="" Editor="hide">No</OutgoingConnections>
         <ConnectionType Editor="hide">Move</ConnectionType>
         <ScriptFunctions Editor="hide">jobArrived</ScriptFunctions>
-        <ExecutionMode Editor="hide">Serialized</ExecutionMode>
+        <ExecutionMode Editor="hide">Concurrent</ExecutionMode>
         <NumberOfSlots Editor="hide">Default</NumberOfSlots>
         <ExecutionGroup Editor="hide"/>
         <PerformanceTuning Editor="hide">No</PerformanceTuning>

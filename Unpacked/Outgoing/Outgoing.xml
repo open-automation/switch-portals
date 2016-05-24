@@ -10,8 +10,8 @@
         <OutgoingConnections RequireAtLeastOne="Yes" DetailedInfo="" Editor="hide">Unlimited</OutgoingConnections>
         <ConnectionType Editor="hide">Move</ConnectionType>
         <ScriptFunctions Editor="hide">timerFired</ScriptFunctions>
-        <ExecutionMode Editor="hide">Serialized</ExecutionMode>
-        <NumberOfSlots Editor="hide">Default</NumberOfSlots>
+        <ExecutionMode Editor="hide">Concurrent</ExecutionMode>
+        <NumberOfSlots Editor="hide">0</NumberOfSlots>
         <ExecutionGroup Editor="hide"/>
         <PerformanceTuning Editor="hide">No</PerformanceTuning>
         <IdleAfterJob Editor="hide">0</IdleAfterJob>
