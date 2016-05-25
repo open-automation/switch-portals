@@ -3,7 +3,7 @@ This script allows you to route jobs within Switch, without a direct connector. 
 
 This repo contains two scripts: an incoming and an outgoing portal. Portals are multiplexed by channels (which you select in the script) so you can have multiple sets of portals within a single flow.
 
-<img src="https://i.imgur.com/4eFxxom.png">
+<img src="https://i.imgur.com/8gqHhVH.png">
 
 ## Usage
 
