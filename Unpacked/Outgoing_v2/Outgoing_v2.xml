@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object>
+    <ElementFields>
+        <Name Type="string" Editor="hide">Outgoing</Name>
+        <DisplayName Type="string" Editor="hide"/>
+        <Version Type="number" Editor="hide">1</Version>
+        <Keywords Type="string" Editor="hide"/>
+        <Tooltip Type="string" Editor="hide"/>
+        <IncomingConnections Editor="hide">No</IncomingConnections>
+        <OutgoingConnections RequireAtLeastOne="Yes" DetailedInfo="" Editor="hide">Unlimited</OutgoingConnections>
+        <ConnectionType Editor="hide">Move</ConnectionType>
+        <ScriptFunctions Editor="hide">timerFired</ScriptFunctions>
+        <ExecutionMode Editor="hide">Concurrent</ExecutionMode>
+        <NumberOfSlots Editor="hide">0</NumberOfSlots>
+        <ExecutionGroup Editor="hide"/>
+        <PerformanceTuning Editor="hide">No</PerformanceTuning>
+        <IdleAfterJob Editor="hide">0</IdleAfterJob>
+        <PositionInElementPane Editor="hide">Configurators</PositionInElementPane>
+        <SubcategoryInElementPane Editor="hide">&lt;ValueDescription Type="stringlist">&lt;Value>Custom&lt;/Value>&lt;/ValueDescription></SubcategoryInElementPane>
+        <DispositionInElementPane Type="number" Editor="hide"/>
+        <Description Type="string" Editor="hide"/>
+        <Compatibility Type="string" Editor="hide"/>
+        <SupportInfo Type="string" Editor="hide"/>
+        <AppDiscovery Type="string" Editor="hide"/>
+        <Connections Type="string" Editor="hide"/>
+        <SwitchModule Type="string" Editor="hide"/>
+        <ObsoleteProperties Type="string" Editor="hide">EtherPath</ObsoleteProperties>
+        <ObsoleteConnectionProperties Type="string" Editor="hide"/>
+        <Scope Validation="Standard" LocalizedTagName="Scope" Subtype="inline" Default="Flow" Tooltip="This property namespaces your channels, allowing you to restrict or allow portals to work within or between flows.&#xa;" DetailedInfo="" Type="enum:Flow;Global" Editor="inline">Flow</Scope>
+        <Channel Validation="Standard" LocalizedTagName="Channel" Subtype="inline" Default="" Tooltip="This property multiplexes portals to allow several portals within your flow, or in other flows, to work without conflict. Incoming and outgoing portals which share the same channel and scope will exchange jobs.&#xa;" DetailedInfo="" Type="enum:A;B;C;D;E;F;G" Editor="inline;sltextwithvar;scriptexp"></Channel>
+        <Debug Validation="Standard" LocalizedTagName="Debug Warnings" Subtype="inline" Default="No" Tooltip="Optional flag to send debug messages to the log as warnings.&#xa;" DetailedInfo="" Type="bool" Editor="inline">No</Debug>
+    </ElementFields>
+    <ConnectionFields/>
+</Object>
