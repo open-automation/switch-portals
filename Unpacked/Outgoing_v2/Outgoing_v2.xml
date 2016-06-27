@@ -3,7 +3,7 @@
     <ElementFields>
         <Name Type="string" Editor="hide">Outgoing</Name>
         <DisplayName Type="string" Editor="hide"/>
-        <Version Type="number" Editor="hide">1</Version>
+        <Version Type="number" Editor="hide">2</Version>
         <Keywords Type="string" Editor="hide"/>
         <Tooltip Type="string" Editor="hide"/>
         <IncomingConnections Editor="hide">No</IncomingConnections>
