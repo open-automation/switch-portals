@@ -9,7 +9,7 @@
         <IncomingConnections RequireAtLeastOne="Yes" Editor="hide">Yes</IncomingConnections>
         <OutgoingConnections DetailedInfo="" Editor="hide">No</OutgoingConnections>
         <ConnectionType Editor="hide">Move</ConnectionType>
-        <ScriptFunctions Editor="hide">jobArrived</ScriptFunctions>
+        <ScriptFunctions Editor="hide">isPropertyValid;jobArrived</ScriptFunctions>
         <ExecutionMode Editor="hide">Concurrent</ExecutionMode>
         <NumberOfSlots Editor="hide">Default</NumberOfSlots>
         <ExecutionGroup Editor="hide"/>
@@ -26,8 +26,9 @@
         <SwitchModule Type="string" Editor="hide"/>
         <ObsoleteProperties Type="string" Editor="hide">EtherPath</ObsoleteProperties>
         <ObsoleteConnectionProperties Type="string" Editor="hide"/>
-        <Scope Validation="Standard" LocalizedTagName="Scope" Subtype="inline" Default="Flow" Tooltip="This property namespaces your channels, allowing you to restrict or allow portals to work within or between flows.&#xa;" DetailedInfo="" Type="enum:Flow;Global" Editor="inline">Flow</Scope>
-        <Channel Validation="Standard" LocalizedTagName="Channel" Subtype="inline" Default="A" Tooltip="This property multiplexes portals to allow several portals within your flow, or in other flows, to work without conflict. Incoming and outgoing portals which share the same channel and scope will exchange jobs.&#xa;" DetailedInfo="" Type="string" Editor="inline;sltextwithvar;scriptexp">A</Channel>
+        <Scope Validation="Custom" LocalizedTagName="Scope" Subtype="" Default="" Tooltip="This property namespaces your channels, allowing you to restrict or allow portals to work within or between flows.&#xa;" DetailedInfo="" Type="enum:Flow;Program;Global" Editor="inline"></Scope>
+        <ProgramId Validation="Custom" DependencyCondition="Equals" Dependencyvalue="Program" LocalizedTagName="Program ID" Subtype="inline" Default="" Dependency="Scope" Tooltip="" DetailedInfo="" Type="string" Editor="inline;sltextwithvar;scriptexp"></ProgramId>
+        <Channel Validation="Custom" LocalizedTagName="Channel" Subtype="inline" Default="A" Tooltip="This property multiplexes portals to allow several portals within your flow, or in other flows, to work without conflict. Incoming and outgoing portals which share the same channel and scope will exchange jobs.&#xa;" DetailedInfo="" Type="string" Editor="inline;sltextwithvar;scriptexp">A</Channel>
         <Debug Validation="Standard" LocalizedTagName="Debug Warnings" Subtype="inline" Default="No" Tooltip="Optional flag to send debug messages to the log as warnings.&#xa;" DetailedInfo="" Type="bool" Editor="inline">No</Debug>
     </ElementFields>
     <ConnectionFields/>
