@@ -14,6 +14,10 @@ Route jobs through incoming portals. If they share the same scope:channel combin
 #### Scope
 This property namespaces your channels, allowing you to restrict or allow portals to work within or between flows.
 
+- Flow - Within a particular flow
+- Program - Anywhere with a shared Program ID on the Switch system
+- Global - Anywhere on the Switch system
+
 #### Channel
 This property multiplexes portals to allow several portals within your flow, or in other flows, to work without conflict. Incoming and outgoing portals which share the same channel and scope will exchange jobs.
 
