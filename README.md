@@ -3,7 +3,7 @@ This script allows you to route jobs within Switch, without a direct connector. 
 
 This repo contains two scripts: an incoming and an outgoing portal. Portals are multiplexed by channels (which you select in the script) so you can have multiple sets of portals within a single flow.
 
-<img src="https://i.imgur.com/8gqHhVH.png">
+<img src="https://i.imgur.com/8gqHhVH.png" width="700">
 
 ## Usage
 
@@ -23,6 +23,9 @@ This property multiplexes portals to allow several portals within your flow, or 
 
 #### Debug Warnings
 Optional flag to send debug messages to the log as warnings.
+
+## '16 Enfocus Safari Presentation 
+[Watch Recording](https://www.enfocus.com/en/virtual-safari/thinking-with-portals) | [Slides](https://docs.google.com/presentation/d/1bV9UrtWUQUcIyCZW-Su-C6SrRKYnkrHehvc10u77C-8/edit?usp=sharing)
 
 ## Todo
 - Allow multiple outgoing portals for a given channel
