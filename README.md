@@ -1,4 +1,4 @@
-# SwitchPortals
+# switch-portals
 This script allows you to route jobs within Switch, without a direct connector. You can use this to better structure flows for readability, prevent crossing connectors and duplicate logic, and easily pass jobs between flows. Portals also makes sharing bundled flows much easier, as you don't need to re-locate non-automanaged folders every time you import a flow on a new system.
 
 This repo contains two scripts: an incoming and an outgoing portal. Portals are multiplexed by channels (which you select in the script) so you can have multiple sets of portals within a single flow.
