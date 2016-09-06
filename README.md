@@ -24,7 +24,10 @@ This property multiplexes portals to allow several portals within your flow, or 
 #### Debug Warnings
 Optional flag to send debug messages to the log as warnings.
 
-## '16 Enfocus Safari Presentation 
+## Callbacks
+Read about callbacks in [switch-best-practices](https://github.com/open-automation/switch-best-practices#design-patterns) or the below presentations.
+
+### '16 Enfocus Safari Presentation 
 [Watch Recording](https://www.enfocus.com/en/virtual-safari/thinking-with-portals) | [Slides](https://docs.google.com/presentation/d/1bV9UrtWUQUcIyCZW-Su-C6SrRKYnkrHehvc10u77C-8/edit?usp=sharing)
 
 ## Todo
