@@ -30,5 +30,11 @@ Read about callbacks in [switch-best-practices](https://github.com/open-automati
 ### '16 Enfocus Safari Presentation 
 [Watch Recording](https://www.enfocus.com/en/virtual-safari/thinking-with-portals) | [Slides](https://docs.google.com/presentation/d/1bV9UrtWUQUcIyCZW-Su-C6SrRKYnkrHehvc10u77C-8/edit?usp=sharing)
 
+## Versions
+* **Version 1** - Used JSON for job ticket. Incompatible with all other versions.
+* **Version 2** - Used XML for job ticket. Incompatible with version 1.
+* **Version 3** - Current WIP with improved performance and error handling. Compatible with version 2.
+
+
 ## Todo
 - Allow multiple outgoing portals for a given channel
