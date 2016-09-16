@@ -33,7 +33,7 @@ Read about callbacks in [switch-best-practices](https://github.com/open-automati
 ## Versions
 * **Version 1** - (_depreciated_) Used JSON for job ticket. Incompatible with all other versions.
 * **Version 2** - (_stable_) Used XML for job ticket. Incompatible with version 1.
-* **Version 3** - (_in development_) Improved performance and error handling. Compatible with version 2.
+* **Version 3** - (_stable_) Improved performance and error handling. Compatible with version 2.
 
 
 ## Todo
