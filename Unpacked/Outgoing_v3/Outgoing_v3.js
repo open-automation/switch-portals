@@ -1,3 +1,5 @@
+// --------- HELPER FUNCTIONS --------- //
+
 var normalizeChannelProperty = function(s : Switch, value){
 	var re = /[^a-zA-Z0-9\-]/gi;
     var modified = value.replace(re, ""); // Replace
@@ -72,17 +74,15 @@ function isPropertyValid( s : Switch, tag : String, original : String )
 {
     var modified = normalizeChannelProperty(s, original);
 
-	//s.log(2, "origial:" + value);
-	//s.log(2, "modified:" + modified);
-
 	// Check for blanks
 	if(modified == "" || original == ""){
 		s.log(3, "Value for " + tag + " may not be blank.");
 		return false;
 	}
-
 	return true;
 }
+
+// --------- APPLICATION --------- //
 
 // Restore datasets
 var restoreDatasets = function(job : Job, s : Switch, datasetsLocation, verboseDebugging){
@@ -102,13 +102,18 @@ var restoreDatasets = function(job : Job, s : Switch, datasetsLocation, verboseD
 			}
 
 			dataset = job.createDataset(model);
-			datasetBacking = dataset.getPath();
+			if (dataset) {
+				datasetBacking = dataset.getPath();
 
-			// Overwrite backing file with source dataset
-			datasetCopySuccess = s.copy(sourceDatasetPath, datasetBacking);
-			job.setDataset(datasetTag, dataset);
+				// Overwrite backing file with source dataset
+				datasetCopySuccess = s.copy(sourceDatasetPath, datasetBacking);
+				job.setDataset(datasetTag, dataset);
 
-			return true;
+				return true;
+			} else {
+				s.log(3, model + " dataset (tag: " + datasetTag + ") could not be created.");
+				return false;
+			}
 	    });
 	}
 
@@ -142,7 +147,7 @@ var restoreJobTicket = function(job : Job, jobTicketLocation, s, verboseDebuggin
 
 	var i, node, key, value, textNode, oldUniqueNamePrefix, oldName;
 
-	// Replace with foreach
+	// Loop through job ticket nodes
 	for(i = 0; i < children.getCount();i++){
 
 		node = children.getItem(i);
@@ -183,7 +188,7 @@ var restoreJobTicket = function(job : Job, jobTicketLocation, s, verboseDebuggin
 			pdChildren = node.getChildNodes();
 
 			// For each PD
-			for(index = 0; index < pdChildren.getCount();index++){
+			for(index = 0; index < pdChildren.getCount(); index++){
 
 				pdNode = pdChildren.getItem(index);
 				key = pdNode.getAttributeValue('key');
@@ -226,8 +231,7 @@ var unarchive = function(job : Job, s : Switch, filePath){
 };
 
 // Invokes other restore functions
-var restoreMetadata = function(fileName, filePath, job : Job, s : Switch, verboseDebugging){
-
+var restoreMetadata = function(fileName, filePath, job : Job, s : Switch, verboseDebugging) {
 	var unpackDestination;
 	var unarchiveResponse = unarchive(job, s, filePath);
 	if(unarchiveResponse === false){
@@ -270,10 +274,12 @@ var unpackJob = function(s : Switch, packedFilePath, fileName, tempFolder, verbo
 	if(restoreReturn === false){
 		return false;
 	} else {
-
-	    // Remove the archive
-	    File.remove(packedFilePath);
-
+		try {
+			// Remove the archive
+			File.remove(packedFilePath);
+		} catch (e) {
+			s.log(3, "Unpacked job could not be removed after job creation and metadata restoration. " + e);
+		}
 	    return restoreReturn;
 	}
 };
@@ -317,6 +323,7 @@ function timerFired( s : Switch )
     // Look for files in the channel
 	var dir = new Dir(channelFolder);
 	var packedChannelJobs = dir.entryList("*", Dir.Files, Dir.Name);
+	var jobSequenceNumber = 1;
 
     if(packedChannelJobs.length > 0){
 
@@ -327,7 +334,7 @@ function timerFired( s : Switch )
 	    // Insert each job found
 		forEach(packedChannelJobs, function(fileName, i){
 			if(verboseDebugging === true){
-				s.log(-1, "Picking up file " + i + ": " + fileName);
+				s.log(-1, "Picking up file " + jobSequenceNumber + ": " + fileName);
 			}
 
 			var packedFilePath = channelFolder + fileName;
@@ -348,6 +355,7 @@ function timerFired( s : Switch )
 				}
 
 				job.sendToSingle(contentPath);
+				jobSequenceNumber++;
 			}
 		});
     }
