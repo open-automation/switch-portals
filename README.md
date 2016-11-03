@@ -22,7 +22,7 @@ This property namespaces your channels, allowing you to restrict or allow portal
 This property multiplexes portals to allow several portals within your flow, or in other flows, to work without conflict. Incoming and outgoing portals which share the same channel and scope will exchange jobs.
 
 #### Debug verbose
-Optional flag to send verbose debug messages to the log.
+Optional flag to send verbose debug messages to the log. Make sure log debugging is on: _Preferences > Logging > Log debug messages = Yes_.
 
 ## Callbacks
 Read about callbacks in [switch-best-practices](https://github.com/open-automation/switch-best-practices#design-patterns) or the below presentations.
