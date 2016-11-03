@@ -1,3 +1,20 @@
+// ---------- HELPER FUNCTIONS ---------- //
+
+// For each helper function
+var forEach = function(array, callback){
+   var currentValue, index;
+   var i = 0;
+   for (i; i < array.length; i += 1) {
+      if(typeof array[i] == "undefined"){
+         currentValue = null;
+      } else {
+         currentValue = array[i];
+      }
+      index = i;
+      callback(currentValue, i, array);
+    }
+}
+
 var normalizeChannelProperty = function(s : Switch, value){
 	var re = /[^a-zA-Z0-9\-]/gi;
 	var modified = value.replace(re, ""); // Replace
@@ -7,9 +24,6 @@ var normalizeChannelProperty = function(s : Switch, value){
 function isPropertyValid( s : Switch, tag : String, original : String )
 {
     var modified = normalizeChannelProperty(s, original);
-
-	//s.log(2, "origial:" + value);
-	//s.log(2, "modified:" + modified);
 
 	// Check for blanks
 	if(modified == "" || original == ""){
@@ -43,8 +57,6 @@ var getChannelKey = function(s : Switch, flow, scope, channel, programId){
        channelKey += flowPrefix + flow + segmentSeperator + channelPrefix + channel;
    }
 
-   //s.log(2, "channelKey: "+channelKey); // Remove
-
    return channelKey;
 };
 
@@ -56,8 +68,11 @@ var getDirectorySeperator = function(s : Switch){
     } else {
         directorySeperator = '\\'
     }
-    return directorySeperator;
+    //return directorySeperator;
+	return "/";
 };
+
+// ---------- APPLICATION ---------- //
 
 // Packing function
 var packJob = function(s : Switch, job : Job, tempFolder, destinationPath, flow, scope, channel, programId, verboseDebugging){
@@ -77,24 +92,30 @@ var packJob = function(s : Switch, job : Job, tempFolder, destinationPath, flow,
         }
 
 		// Replace with forEach
-        for (i=0; i < datasetTags.length; i++) {
-			tag = datasetTags[i];
+		forEach(datasetTags, function(tag) {
+        	//for (i=0; i < datasetTags.length; i++) {
+			//tag = datasetTags[i];
 
 			if(verboseDebugging === true){
 				s.log(-1, "Packing dataset: "+ tag);
 			}
 
 			dataset = job.getDataset(tag);
-			datasetPath = dataset.getPath();
-			datasetModel = dataset.getModel();
 
-			// Copy datasets to temp location
-			datasetDestination = 	packLocation + getDirectorySeperator(s)
-			    + "datasets" + getDirectorySeperator(s)
-			    + tag + "." + datasetModel;
+			if (dataset) {
+				datasetPath = dataset.getPath();
+				datasetModel = dataset.getModel();
 
-			s.copy(datasetPath, datasetDestination);
-        }
+				// Copy datasets to temp location
+				datasetDestination = 	packLocation + getDirectorySeperator(s)
+				    					+ "datasets" + getDirectorySeperator(s)
+				    					+ tag + "." + datasetModel;
+
+				s.copy(datasetPath, datasetDestination);
+			} else {
+				s.log(2, "Dataset '"+ tag + "' could not be retreived. Skipping.");
+			}
+		});
 
     };
 
@@ -111,8 +132,6 @@ var packJob = function(s : Switch, job : Job, tempFolder, destinationPath, flow,
 			var parentLength, index, child;
 			parentLength = parent.getChildNodes().length;
 			index = 'Key'+parentLength;
-
-			//s.log(2, "parentLength: "+parentLength);
 
 			if(attributeAsKey == true){
 				child = doc.createElement(index, null);
@@ -144,11 +163,12 @@ var packJob = function(s : Switch, job : Job, tempFolder, destinationPath, flow,
 					s.log(-1, privateDataTags.length + " private data tags found.");
 				}
 				// Replace with forEach
-				for (i=0; i < privateDataTags.length; i++) {
-				   	tag = privateDataTags[i];
+				forEach(privateDataTags, function(tag) {
+					//for (i=0; i < privateDataTags.length; i++) {
+				   	//tag = privateDataTags[i];
 					// Create it
 					createElement(pdParent, doc, tag, job.getPrivateData(tag), true);
-				}
+				});
             }
 
             return true;
@@ -210,12 +230,16 @@ var packJob = function(s : Switch, job : Job, tempFolder, destinationPath, flow,
         var jobTempPath = '';
         if(job.isFolder()){
 
-            jobTempFolder = job.createPathWithName("contents", true);
+			jobTempFolder = job.createPathWithName("contents", true);
 
-            contentsDir = new Dir(jobTempFolder);
-            contentsDir.mkdir(job.getName());
+			contentsDir = new Dir(jobTempFolder);
+			try {
+				contentsDir.mkdir(job.getName());
+			} catch(e) {
+				s.log(3, "Could not mkdir 'contents' in '"+ contentsDir +"' " + e);
+			}
 
-            jobTempPath = jobTempFolder + getDirectorySeperator(s) + job.getName();
+			jobTempPath = jobTempFolder + getDirectorySeperator(s) + job.getName();
 
         } else {
             jobTempPath = packLocation + getDirectorySeperator(s)
@@ -225,7 +249,11 @@ var packJob = function(s : Switch, job : Job, tempFolder, destinationPath, flow,
                 + "contents";
         }
 
-        var copyResult = s.copy(job.getPath(), jobTempPath);
+       var copyResult = s.copy(job.getPath(), jobTempPath);
+
+	   if(!copyResult) {
+		   s.log(3, "Job failed to copy to the temporary archive location.");
+	   }
 
 		if(verboseDebugging === true){
 	        s.log(-1, "job.getPath(): " + job.getPath());
@@ -233,21 +261,23 @@ var packJob = function(s : Switch, job : Job, tempFolder, destinationPath, flow,
 	        s.log(-1, "copyResult: " + copyResult);
 		}
 
-        // Archive
-        var password = '';
-        var compress = false;
-        var removeExisting = false;
-        var packDestination = destinationPath + ".zip";
+		// Archive
+		var password = '';
+		var compress = false;
+		var removeExisting = false;
+		var packDestination = destinationPath + ".zip";
 
-        var archiveSuccess = s.archive(jobTempFolder, packDestination, password, compress, removeExisting);
-        var archiveSuccess = s.archive(packLocation + getDirectorySeperator(s) + "datasets", packDestination, password, compress, removeExisting);
-        var archiveSuccess = s.archive(packLocation + getDirectorySeperator(s) + "jobTicket", packDestination, password, compress, removeExisting);
+		var assetArchiveSuccess = s.archive(jobTempFolder, packDestination, password, compress, removeExisting);
+		var datasetArchiveSuccess = s.archive(packLocation + getDirectorySeperator(s) + "datasets", packDestination, password, compress, removeExisting);
+		var ticketArchiveSuccess = s.archive(packLocation + getDirectorySeperator(s) + "jobTicket", packDestination, password, compress, removeExisting);
 
-		if(verboseDebugging === true){
+		if (verboseDebugging === true){
 	        s.log(-1, "Archive saved to: " + destinationPath);
+	        s.log(-1, "assetArchiveSuccess: " + assetArchiveSuccess +
+				  		" datasetArchiveSuccess: "+ datasetArchiveSuccess +
+				  		" ticketArchiveSuccess: " + ticketArchiveSuccess);
 		}
-
-        return archiveSuccess;
+        return assetArchiveSuccess;
     };
 
     // Do it
@@ -258,6 +288,10 @@ var packJob = function(s : Switch, job : Job, tempFolder, destinationPath, flow,
     return packLocation;
 
 };
+
+var normalizePath = function( s : Switch, path) {
+	return Dir.convertSeparators( path );
+}
 
 function jobArrived( s : Switch, job : Job )
 {
@@ -284,12 +318,12 @@ function jobArrived( s : Switch, job : Job )
 
     var channelKey = getChannelKey(s, flow, scope, channel, programId);
 
-    var channelFolder = etherPath + getDirectorySeperator(s)
-        + channelKey + getDirectorySeperator(s);
+    var channelFolder = normalizePath(s, etherPath + getDirectorySeperator(s)
+        + channelKey + getDirectorySeperator(s));
 
-    var tempFolder = etherPath + getDirectorySeperator(s)
+    var tempFolder = normalizePath(s, etherPath + getDirectorySeperator(s)
         + channelKey + getDirectorySeperator(s)
-        + "temp" + getDirectorySeperator(s);
+        + "temp" + getDirectorySeperator(s));
 
     var destinationPath = channelFolder + completeFilename;
 
@@ -315,7 +349,11 @@ function jobArrived( s : Switch, job : Job )
 
     // Create ether folder if it doesn't exist
     if(!etherDir.exists){
-        scriptDataDir.mkdir(etherName);
+		try {
+       		scriptDataDir.mkdir(etherName);
+		} catch (e) {
+			s.log(3, "Could not make ether folder. " + e);
+		}
 		if(verboseDebugging === true){
 			s.log(-1, "Ether folder did not exist. Creating it.");
 		}
@@ -323,7 +361,11 @@ function jobArrived( s : Switch, job : Job )
 
     // Create channel folder if it doesn't exist
     if(!channelDir.exists){
-		etherDir.mkdir(channelKey);
+		try {
+			etherDir.mkdir(channelKey);
+		} catch (e) {
+			s.log(3, "Could not make channel folder. " + e);
+		}
 		if(verboseDebugging === true){
 			s.log(-1, "Channel folder did not exist. Creating it.");
 		}
@@ -334,7 +376,11 @@ function jobArrived( s : Switch, job : Job )
 
     // Remove the temporarily packed job
     var tempPackDir = new Dir(tempPackLocation);
-    tempPackDir.rmdirs();
+	try {
+		tempPackDir.rmdirs();
+	} catch (e) {
+		s.log(3, "Could not delete the temporay packed job. " + e);
+	}
 
     // Remove this job from Switch
     job.sendToNull(job.getPath());
