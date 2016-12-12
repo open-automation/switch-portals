@@ -9,6 +9,13 @@ This repo contains two scripts: an incoming and an outgoing portal. Portals are 
 
 Route jobs through incoming portals. If they share the same scope:channel combination, they will process out of like outgoing portals. Use these to better organize individual flows or allow multiple flows to work together, without having to manage a bunch of non-automanaged folders. 
 
+### Limitations
+You can have multiple incoming (orange) portals for any scope:channel, but only one outgoing (blue) portal for that scope:channel. The reason why is, the orange portals pack and store the job away (in a location unknown to you) and the blue portal looks in that location. So, if you have multiple blue portals, then one of them would find the packed job and remove it before the other one could see it. Said another way, if you have multiple blue portals for any given scope:channel, then you can't be sure which blue portal the job will be routed to, so that behavior is not currently supported. A simpler solution is to use another channel for the second blue output.
+
+In the diagram below, A and B represent matching scope:channel combinations.
+
+<img src="https://i.imgur.com/mhs9Hc2.png" width="500">
+
 ### Flow element properties
 
 #### Scope
